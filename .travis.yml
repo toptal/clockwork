@@ -11,3 +11,6 @@ rvm:
 gemfile:
   - gemfiles/activesupport3.gemfile
   - gemfiles/activesupport4.gemfile
+script:
+  - bundle exec rake
+  - bundle exec rspec spec
