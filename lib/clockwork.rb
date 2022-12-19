@@ -1,4 +1,5 @@
 require 'logger'
+require 'active_support'
 require 'active_support/time'
 
 require 'clockwork/at'
