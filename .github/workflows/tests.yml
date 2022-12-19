@@ -1,0 +1,34 @@
+name: RSpec
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    types: [
+      synchronize, # PR was updated
+      opened, # PR was open
+      reopened, # PR was closed and is now open again
+      ready_for_review, # PR was converted from draft to open
+    ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ruby-version: ['2.7.7', '3.0.5']
+        rails-version-gemfile:
+          - activesupport_6_0.gemfile
+          - activesupport_6_1.gemfile
+          - activesupport_7_0.gemfile
+    env:
+      BUNDLE_GEMFILE: gemfiles/${{ matrix.rails-version-gemfile }}
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        bundler-cache: true
+        ruby-version: ${{ matrix.ruby-version }}
+    - name: Run tests
+      run: bundle exec rspec
