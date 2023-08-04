@@ -60,12 +60,25 @@ module Clockwork
 
     def run
       log "Starting clock for #{@events.size} events: [ #{@events.map(&:to_s).join(' ')} ]"
+
+      lock_info = lock_manager.lock('clockwork_distributed_lock', lock_timeout)
       loop do
-        tick
+        if lock_info
+          # tick
+          p 'ticking'
+        else
+          p 'lock is acuired by someone else, leaving'
+        end
         interval = config[:sleep_timeout] - Time.now.subsec + 0.001
         sleep(interval) if interval > 0
+
+        # Lock timeout is unknown here, it depends
+        # how much time we spend on lock acquire - should determine how long can lock_manage.lock run
+        # how much time we spend on tick
+        lock_info = lock_manager.lock('clockwork_distributed_lock', lock_timeout, extend: lock_info)
       end
     end
+
 
     def tick(t=Time.now)
       if (fire_callbacks(:before_tick))
@@ -81,6 +94,10 @@ module Clockwork
       events
     end
 
+    def lock_manager
+      @lock_manager ||= Redlock::Client.new(['redis://localhost:6379'])
+    end
+
     def log_error(e)
       config[:logger].error(e)
     end
@@ -94,6 +111,11 @@ module Clockwork
     end
 
     private
+
+    def lock_timeout
+      (config[:sleep_timeout] + 10) * 1000
+    end
+
     def events_to_run(t)
       @events.select{ |event| event.run_now?(t) }
     end
