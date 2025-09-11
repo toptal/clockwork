@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        ruby-version: ['2.7.7', '3.0.5', '3.2']
+        ruby-version: ['3.2']
         rails-version-gemfile:
           - activesupport_6_0.gemfile
           - activesupport_6_1.gemfile
