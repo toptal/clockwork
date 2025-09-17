@@ -21,6 +21,9 @@ jobs:
           - activesupport_6_0.gemfile
           - activesupport_6_1.gemfile
           - activesupport_7_0.gemfile
+        include:
+          - ruby-version: '3.2'
+            rails-version-gemfile: activesupport_7_1.gemfile
     env:
       BUNDLE_GEMFILE: gemfiles/${{ matrix.rails-version-gemfile }}
     steps:

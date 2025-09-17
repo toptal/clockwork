@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_dependency 'tzinfo'
-  s.add_dependency 'activesupport', '>= 6.0', '< 7.1'
+  s.add_dependency 'activesupport', '>= 6.0', '< 7.2'
 
   s.add_development_dependency "bundler"
   s.add_development_dependency "rake"
