@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = "clockwork"
-  s.version = "1.2.0"
+  s.version = "2.0.0"
 
   s.authors = ["Adam Wiggins", "tomykaira"]
   s.license = 'MIT'
@@ -18,13 +18,13 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_dependency 'tzinfo'
-  s.add_dependency 'activesupport', '>= 6.0', '< 7.2'
+  s.add_dependency 'activesupport', '>= 7.2'
 
   s.add_development_dependency "bundler"
   s.add_development_dependency "rake"
   s.add_development_dependency "daemons"
   s.add_development_dependency "test-unit"
-  s.add_development_dependency "minitest", "~> 5.1"
+  s.add_development_dependency "minitest"
   s.add_development_dependency "mocha"
   s.add_development_dependency "rspec"
   s.add_development_dependency "guard-rspec"
